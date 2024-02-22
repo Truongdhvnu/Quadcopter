@@ -18,12 +18,6 @@
 
 #define GYRO_SCALE_OPTION  0x08   // FS_SEL = 500 do / s 
 #define GYRO_SCALE_VALUE 65.5   // -> scale = 65.5
-/*
-        stupid variable using to calculating angles by gyro only
-        used only to show the uses of the kalman filter only
-        not use this parameter final code
-*/
-#define stupid
 
 class MPU6050{
     // private:
@@ -78,7 +72,9 @@ public:
     int16_t getRawGyroY(){ return rawGyroY; };
     int16_t getRawGyroZ(){ return rawGyroZ; };
 
-    Rate_paras get_gyro_paras();
+    Control_paras get_gyro_paras();
+    Control_paras get_angle_paras();
+
     float getInterval();
     float getTemp(){ return temp; };
     float getAccX(){ return accX; };

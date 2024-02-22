@@ -17,7 +17,7 @@ public:
 	
     void test_initial_pwms();
     
-    void set_motors_speed(Rate_paras motor_power_commamd);
+    void set_motors_speed(Control_paras motor_power_commamd);
     
     void set_rates();
 

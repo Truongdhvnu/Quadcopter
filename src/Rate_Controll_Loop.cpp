@@ -47,25 +47,32 @@ public:
     /*
         Remember that controller outputs are inputs of plant (motors_controller) 
     */
-    Rate_paras calculate_plan_inputs(Rate_paras error, float interval) {
-        Rate_paras controller_ouput;
+    Control_paras calculate_plan_inputs(Control_paras error, float interval) {
+        Control_paras controller_ouput;
         controller_ouput.roll = roll_rate_controller.calculate_plan_input(error.roll, interval);
         controller_ouput.pitch = pitch_rate_controller.calculate_plan_input(error.pitch, interval);
         controller_ouput.yaw = yaw_rate_controller.calculate_plan_input(error.yaw, interval);
         return controller_ouput;
     }
 
+    void loop(Control_paras desired_rate) {
+        mpu6050.update();
+        Control_paras feedback = mpu6050.get_gyro_paras();
+        Control_paras plant_input = calculate_plan_inputs(desired_rate-feedback, mpu6050.getInterval());
+        motorsController.set_motors_speed(plant_input);
+    }
+
     /*
         !Attention: When logging so much data to Serial, time interval becomes unstable? why?
         In this case, It occurs when using 2 or 3 of log commands below and don't when using only one.
     */
-    void test_rate_controll_loop(Rate_paras desired_rate) {
+    void test_rate_controll_loop(Control_paras desired_rate) {
         long timer = millis();
         int i = 0;
         while(true) {
             mpu6050.update();
-            Rate_paras feedback = mpu6050.get_gyro_paras();
-            Rate_paras plant_input = calculate_plan_inputs(desired_rate-feedback, mpu6050.getInterval());
+            Control_paras feedback = mpu6050.get_gyro_paras();
+            Control_paras plant_input = calculate_plan_inputs(desired_rate-feedback, mpu6050.getInterval());
             motorsController.set_motors_speed(plant_input);
             /*
                 logging command

@@ -30,6 +30,10 @@
 #define I2C_MPU6050_RATE            100000
 #define I2C_MPU6050_SDA             21
 #define I2C_MPU6050_SCL             22
+// stupid variable using to calculating angles by gyro only
+// used only to show the uses of the kalman filter only 
+// not use this parameter final code
+#define stupid
 
 /*
     PID controller contrains

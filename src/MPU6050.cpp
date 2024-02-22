@@ -196,11 +196,23 @@ void MPU6050::setInterval(float interV) {
 	interval = interV;
 }
 
-Rate_paras MPU6050::get_gyro_paras() {
-	Rate_paras result;
+Control_paras MPU6050::get_gyro_paras() {
+	Control_paras result;
 	result.roll = gyroX;
 	result.pitch = gyroY;
 	result.yaw = gyroZ;
+	return result;
+}
+
+/*
+	!Attention: yaw parameter is kept equal to 0
+	return Roll & Pitch calculated by Kalman filter
+*/
+Control_paras MPU6050::get_angle_paras() {
+	Control_paras result;
+	result.roll = angleX;
+	result.pitch = angleY;
+	result.yaw = 0;
 	return result;
 }
 

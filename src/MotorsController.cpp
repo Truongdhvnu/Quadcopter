@@ -27,7 +27,7 @@ static uint32_t inline limit_rate(uint32_t rate) {
         return uint32_t(MOTOR_THROTTLE_MIN);
     }
     if (rate > MOTOR_THROTTLE_MAX) {
-        return uint32_t(MOTOR_THROTTLE_MIN);
+        return uint32_t(MOTOR_THROTTLE_MAX);
     }
     return rate;
 }
@@ -40,7 +40,7 @@ static uint32_t inline limit_rate(uint32_t rate) {
     motor3: ul motor
     motor4: ur motor
 */
-void Motorscontroller::set_motors_speed(Rate_paras motor_power_commamd) { 
+void Motorscontroller::set_motors_speed(Control_paras motor_power_commamd) { 
     dr_rate = uint32_t(DEFAUTL_THROTTEL - motor_power_commamd.roll - motor_power_commamd.pitch - motor_power_commamd.yaw);
     dl_rate = uint32_t(DEFAUTL_THROTTEL - motor_power_commamd.roll + motor_power_commamd.pitch + motor_power_commamd.yaw);
     ul_rate = uint32_t(DEFAUTL_THROTTEL + motor_power_commamd.roll + motor_power_commamd.pitch - motor_power_commamd.yaw);
